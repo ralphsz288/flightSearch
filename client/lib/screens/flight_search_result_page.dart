@@ -1,37 +1,35 @@
+import 'package:client/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FlightSearchResultPage extends StatelessWidget {
-  final String fromLocation;
-  final String toLocation;
-  final double fromDays;
-  final double toDays;
-
-  const FlightSearchResultPage(
-      {required this.toLocation,
-        required this.fromLocation,
-        required this.fromDays,
-        required this.toDays,
-        Key? key}) : super(key: key);
+class FlightSearchResult extends ConsumerWidget {
+  const FlightSearchResult({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(toLocation),
-            Text(fromLocation),
-            Text(fromDays.toString()),
+  Widget build(BuildContext context,WidgetRef ref) {
 
+    final viewState = ref.read(flightStateProvider.notifier);
+
+    return WillPopScope(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              viewState.setToReady();
+              Navigator.of(context).pushNamed('/home');
+            }, icon: const Icon(Icons.arrow_back),
+          ),
+        ),
+        body: Column(
+          children: const [
+            Text('afasf'),
           ],
         ),
       ),
+      onWillPop: () async  {
+        return false;
+      },
     );
   }
 }
+

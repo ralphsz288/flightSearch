@@ -1,12 +1,8 @@
-import 'dart:convert';
 import 'package:client/models/flight_state.dart';
-import 'package:client/models/view_state.dart';
 import 'package:client/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
 import 'package:client/screens/flight_search_result_page.dart';
-import 'package:flutter/material.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -30,7 +26,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         loading:() => _loading(),
         ready: () => _body(),
         error:() => _error(),
-        completed: (FlightState state) => _body(state: state));
+        completed: (FlightState state) => const FlightSearchResult());
 
   }
     Widget _loading() {
@@ -143,12 +139,6 @@ class _HomePageState extends ConsumerState<HomePage> {
           label: const Text('search flights'),
           onPressed: () async {
             await ref.read(flightStateProvider.notifier).init(fromLocation, toLocation, _rangeValues.start.toString(), _rangeValues.end.toString());
-
-            if(ref.read(flightStateProvider) is ViewStateCompleted){
-              print('completat');
-            }
-
-
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

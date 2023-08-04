@@ -13,9 +13,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return const ProviderScope(
+    return ProviderScope(
       child: MaterialApp(
-        home: HomePage(),
+        home: const HomePage(),
+        routes: {
+          '/home': (context) => const HomePage(),
+          '/flightResults':(context) => const FlightSearchResult(),
+        },
       ),
     );
   }
