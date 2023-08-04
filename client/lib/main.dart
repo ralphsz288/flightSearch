@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
         home: const HomePage(),
         routes: {
           '/home': (context) => const HomePage(),
-          '/flightResults':(context) => const FlightSearchResult(),
         },
       ),
     );

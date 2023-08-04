@@ -1,5 +1,7 @@
 import 'package:client/models/flight_state.dart';
+import 'package:client/models/view_state.dart';
 import 'package:client/providers.dart';
+import 'package:client/providers/flight_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:client/screens/flight_search_result_page.dart';
@@ -26,7 +28,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         loading:() => _loading(),
         ready: () => _body(),
         error:() => _error(),
-        completed: (FlightState state) => const FlightSearchResult());
+        completed: (FlightState state) => _completed(state));
 
   }
     Widget _loading() {
@@ -46,6 +48,34 @@ class _HomePageState extends ConsumerState<HomePage> {
           ),
         )
       ),
+    );
+  }
+
+  Widget _completed(FlightState state) {
+    return WillPopScope(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              ref.read(flightStateProvider.notifier).setToReady();
+              Navigator.of(context).pushNamed('/home');
+            }, icon: const Icon(Icons.arrow_back),
+          ),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(state.fromLocation),
+              Text(state.toLocation),
+              Text(state.resp![0]['data']['price'].toString()),
+            ],
+          ),
+        ),
+      ),
+      onWillPop: () async {
+        return false;
+      },
     );
   }
 

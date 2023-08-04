@@ -29,7 +29,6 @@ class FlightViewModel extends StateNotifier<ViewState<FlightState>> {
     var url = Uri.parse('$baseUrl$path?$queryString');
     final resp = await http.get(url);
     List data = json.decode(resp.body);
-    print(data);
 
     if (resp.statusCode == 200 && data[0]['success'] == true) {
       _flightState = FlightState(
@@ -41,6 +40,7 @@ class FlightViewModel extends StateNotifier<ViewState<FlightState>> {
       );
 
       state = ViewState<FlightState>.completed(_flightState);
+      print(_flightState.resp);
     } else {
       print('errorrrrr');
       state = const ViewState<FlightState>.error();
