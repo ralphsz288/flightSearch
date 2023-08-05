@@ -53,19 +53,17 @@ class _HomePageState extends ConsumerState<HomePage> {
           preferredSize: const Size.fromHeight(200),
           child: AppBar(
             flexibleSpace: ClipRRect(
-              borderRadius: const BorderRadius.only(bottomRight: Radius.circular(50)),
+              borderRadius:
+                  const BorderRadius.only(bottomRight: Radius.circular(50)),
               child: Container(
-                decoration:const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("images/airplanePicture.jpg"),
-                    fit: BoxFit.fill
-                  )
-                )
-              ),
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("images/airplanePicture.jpg"),
+                          fit: BoxFit.fill))),
             ),
             shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(bottomRight: Radius.circular(50))
-            ),
+                borderRadius:
+                    BorderRadius.only(bottomRight: Radius.circular(50))),
             leading: IconButton(
               onPressed: () {
                 ref.read(flightStateProvider.notifier).setToReady();
@@ -79,8 +77,29 @@ class _HomePageState extends ConsumerState<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              const Padding(
+                padding: EdgeInsets.only(top: 15),
+                child: Text(
+                  'Best flight found',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
+                ),
+              ),
+              const Divider(color: Colors.blue,),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
+                padding: const EdgeInsets.fromLTRB(0, 25, 25, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Price: ${state.resp![0]['data']['price']}€',
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
                 child: Card(
                   elevation: 2,
                   shadowColor: Colors.red,
@@ -100,11 +119,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                             style: const TextStyle(fontSize: 10),
                           ),
                           Text(
-                            state.resp![0]['data']['departure_date'].substring(0,10),
+                            state.resp![0]['data']['departure_date']
+                                .substring(0, 10),
                             style: const TextStyle(fontSize: 10),
                           ),
                           Text(
-                            state.resp![0]['data']['departure_date'].substring(11,16),
+                            state.resp![0]['data']['departure_date']
+                                .substring(11, 16),
                             style: const TextStyle(fontSize: 10),
                           ),
                         ],
@@ -125,29 +146,31 @@ class _HomePageState extends ConsumerState<HomePage> {
                             style: const TextStyle(fontSize: 10),
                           ),
                           Text(
-                            state.resp![0]['data']['departure_arrival'].substring(0,10),
+                            state.resp![0]['data']['departure_arrival']
+                                .substring(0, 10),
                             style: const TextStyle(fontSize: 10),
                           ),
                           Text(
-                            state.resp![0]['data']['departure_arrival'].substring(11,16),
+                            state.resp![0]['data']['departure_arrival']
+                                .substring(11, 16),
                             style: const TextStyle(fontSize: 10),
                           ),
                         ],
                       ),
-
                     ],
-
                   ),
                 ),
-
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20),
-                child: Text('Nights in destination: ${state.resp![0]['data']['nights_in_destination']}',style: const TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.w500),),
+                child: Text(
+                  'Nights in destination: ${state.resp![0]['data']['nights_in_destination']}',
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w500),
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 35),
                 child: Card(
                   elevation: 2,
                   shadowColor: Colors.blue,
@@ -167,11 +190,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                             style: const TextStyle(fontSize: 10),
                           ),
                           Text(
-                            state.resp![0]['data']['return_date'].substring(0,10),
+                            state.resp![0]['data']['return_date']
+                                .substring(0, 10),
                             style: const TextStyle(fontSize: 10),
                           ),
                           Text(
-                            state.resp![0]['data']['return_date'].substring(11,16),
+                            state.resp![0]['data']['return_date']
+                                .substring(11, 16),
                             style: const TextStyle(fontSize: 10),
                           ),
                         ],
@@ -192,29 +217,22 @@ class _HomePageState extends ConsumerState<HomePage> {
                             style: const TextStyle(fontSize: 10),
                           ),
                           Text(
-                            state.resp![0]['data']['return_arrival'].substring(0,10),
+                            state.resp![0]['data']['return_arrival']
+                                .substring(0, 10),
                             style: const TextStyle(fontSize: 10),
                           ),
                           Text(
-                            state.resp![0]['data']['return_arrival'].substring(11,16),
+                            state.resp![0]['data']['return_arrival']
+                                .substring(11, 16),
                             style: const TextStyle(fontSize: 10),
                           ),
                         ],
                       ),
-
                     ],
-
                   ),
                 ),
-
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Text(
-                    'Price: ${state.resp![0]['data']['price']}€',style: const TextStyle(
-                    fontSize: 25, fontWeight: FontWeight.w500),
-                ),
-              ),
+              const Divider(color: Colors.blue,),
             ],
           ),
         ),
@@ -225,25 +243,25 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
   }
 
-  Widget _body({FlightState? state}) {
+  Widget _body() {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(200),
         child: AppBar(
+          centerTitle: true,
           flexibleSpace: ClipRRect(
-            borderRadius: const BorderRadius.only(bottomRight: Radius.circular(50)),
+            borderRadius:
+                const BorderRadius.only(bottomRight: Radius.circular(50)),
             child: Container(
-                decoration:const BoxDecoration(
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("images/airplanePicture.jpg"),
-                        fit: BoxFit.fill
-                    )
-                )
-            ),
+                        fit: BoxFit.fill))),
           ),
           shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(bottomRight: Radius.circular(50))
-          ),
+              borderRadius:
+                  BorderRadius.only(bottomRight: Radius.circular(50))),
           leading: IconButton(
             onPressed: () {
               ref.read(flightStateProvider.notifier).setToReady();
@@ -253,86 +271,88 @@ class _HomePageState extends ConsumerState<HomePage> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 5,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Center(
-                child: Text(
-              'Flight Search',
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
-            )),
-            Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: TextFormField(
-                autofocus: false,
-                keyboardType: TextInputType.name,
-                decoration: const InputDecoration(
-                    labelText: 'From:',
-                    hintText: 'Enter iatacode',
-                    prefixIcon: Icon(Icons.flight_takeoff_outlined),
-                    border: OutlineInputBorder()),
-                onChanged: (value) {
-                  setState(() {
-                    fromLocation = value;
-                  });
-                },
-                validator: (value) {
-                  return value!.isEmpty ? 'Please enter username' : null;
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: TextFormField(
-                autofocus: false,
-                keyboardType: TextInputType.name,
-                decoration: const InputDecoration(
-                    labelText: 'To:',
-                    hintText: 'Enter iatacode',
-                    prefixIcon: Icon(Icons.flight_land_outlined),
-                    border: OutlineInputBorder()),
-                onChanged: (value) {
-                  setState(() {
-                    toLocation = value;
-                  });
-                },
-                validator: (value) {
-                  return value!.isEmpty ? 'Please enter username' : null;
-                },
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(top: 30),
-              child: Center(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 20,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Center(
                   child: Text(
-                'How many days would you like to spend in your destination?',
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+                'Search flight',
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
               )),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5),
-              child: RangeSlider(
-                  values: _rangeValues,
-                  max: 50,
-                  divisions: 50,
-                  labels: RangeLabels(
-                    _rangeValues.start.round().toString(),
-                    _rangeValues.end.round().toString(),
-                  ),
-                  onChanged: (RangeValues values) {
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: TextFormField(
+                  autofocus: false,
+                  keyboardType: TextInputType.name,
+                  decoration: const InputDecoration(
+                      labelText: 'From:',
+                      hintText: 'Enter iatacode',
+                      prefixIcon: Icon(Icons.flight_takeoff_outlined),
+                      border: OutlineInputBorder()),
+                  onChanged: (value) {
                     setState(() {
-                      _rangeValues = values;
+                      fromLocation = value;
                     });
-                  }),
-            ),
-          ],
+                  },
+                  validator: (value) {
+                    return value!.isEmpty ? 'Please enter username' : null;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: TextFormField(
+                  autofocus: false,
+                  keyboardType: TextInputType.name,
+                  decoration: const InputDecoration(
+                      labelText: 'To:',
+                      hintText: 'Enter iatacode',
+                      prefixIcon: Icon(Icons.flight_land_outlined),
+                      border: OutlineInputBorder()),
+                  onChanged: (value) {
+                    setState(() {
+                      toLocation = value;
+                    });
+                  },
+                  validator: (value) {
+                    return value!.isEmpty ? 'Please enter username' : null;
+                  },
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 30),
+                child: Center(
+                    child: Text(
+                  'How many days would you like to spend in your destination?',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+                )),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: RangeSlider(
+                    values: _rangeValues,
+                    max: 50,
+                    divisions: 50,
+                    labels: RangeLabels(
+                      _rangeValues.start.round().toString(),
+                      _rangeValues.end.round().toString(),
+                    ),
+                    onChanged: (RangeValues values) {
+                      setState(() {
+                        _rangeValues = values;
+                      });
+                    }),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
