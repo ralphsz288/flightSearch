@@ -49,13 +49,30 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget _completed(FlightState state) {
     return WillPopScope(
       child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              ref.read(flightStateProvider.notifier).setToReady();
-              Navigator.of(context).pushNamed('/home');
-            },
-            icon: const Icon(Icons.arrow_back),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(200),
+          child: AppBar(
+            flexibleSpace: ClipRRect(
+              borderRadius: const BorderRadius.only(bottomRight: Radius.circular(50)),
+              child: Container(
+                decoration:const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("images/airplanePicture.jpg"),
+                    fit: BoxFit.fill
+                  )
+                )
+              ),
+            ),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(bottomRight: Radius.circular(50))
+            ),
+            leading: IconButton(
+              onPressed: () {
+                ref.read(flightStateProvider.notifier).setToReady();
+                Navigator.of(context).pushNamed('/home');
+              },
+              icon: const Icon(Icons.arrow_back),
+            ),
           ),
         ),
         body: Center(
@@ -117,8 +134,85 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ),
                         ],
                       ),
+
                     ],
+
                   ),
+                ),
+
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Text('Nights in destination: ${state.resp![0]['data']['nights_in_destination']}',style: const TextStyle(
+                    fontSize: 20, fontWeight: FontWeight.w500),),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
+                child: Card(
+                  elevation: 2,
+                  shadowColor: Colors.blue,
+                  color: Colors.white30,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            state.toLocation.toUpperCase(),
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w500),
+                          ),
+                          Text(
+                            state.resp![0]['data']['destination_city'],
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                          Text(
+                            state.resp![0]['data']['return_date'].substring(0,10),
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                          Text(
+                            state.resp![0]['data']['return_date'].substring(11,16),
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        ],
+                      ),
+                      const Icon(
+                        Icons.flight_takeoff_rounded,
+                        size: 30,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            state.fromLocation.toUpperCase(),
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w500),
+                          ),
+                          Text(
+                            state.resp![0]['data']['departure_city'],
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                          Text(
+                            state.resp![0]['data']['return_arrival'].substring(0,10),
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                          Text(
+                            state.resp![0]['data']['return_arrival'].substring(11,16),
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                        ],
+                      ),
+
+                    ],
+
+                  ),
+                ),
+
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: Text(
+                    'Price: ${state.resp![0]['data']['price']}€',style: const TextStyle(
+                    fontSize: 25, fontWeight: FontWeight.w500),
                 ),
               ),
             ],
@@ -133,9 +227,31 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   Widget _body({FlightState? state}) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(200),
+        child: AppBar(
+          flexibleSpace: ClipRRect(
+            borderRadius: const BorderRadius.only(bottomRight: Radius.circular(50)),
+            child: Container(
+                decoration:const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("images/airplanePicture.jpg"),
+                        fit: BoxFit.fill
+                    )
+                )
+            ),
+          ),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(bottomRight: Radius.circular(50))
+          ),
+          leading: IconButton(
+            onPressed: () {
+              ref.read(flightStateProvider.notifier).setToReady();
+              Navigator.of(context).pushNamed('/home');
+            },
+            icon: const Icon(Icons.arrow_back),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.only(

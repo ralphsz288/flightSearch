@@ -3,7 +3,7 @@ import json
 
 class FlightData:
 
-    def __init__(self, price, origin_city, origin_airport, destination_city, destination_airport, out_date, return_date,available_tickets,out_date_arrival,return_date_arrival):
+    def __init__(self, price, origin_city, origin_airport, destination_city, destination_airport, out_date, return_date,available_tickets,out_date_arrival,return_date_arrival,nights_in_destination):
         self.price = price
         self.origin_city = origin_city
         self.origin_airport = origin_airport
@@ -14,6 +14,7 @@ class FlightData:
         self.available_tickets = available_tickets
         self.out_date_arrival = out_date_arrival
         self.return_date_arrival = return_date_arrival
+        self.nights_in_destination = nights_in_destination
 
 class FlightSearch:
     def __init__(self):
@@ -62,6 +63,6 @@ class FlightSearch:
             return_date=data["route"][1]["local_departure"],
             return_date_arrival=data["route"][1]["local_arrival"],
             available_tickets=data['availability']['seats'],
-            
+            nights_in_destination=data['nightsInDest']
         )
         return flight_data

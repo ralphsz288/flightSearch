@@ -75,6 +75,7 @@ def getFlights(request):
                 'return_date' : data.return_date,
                 'return_arrival' : data.return_date_arrival,
                 'available_tickets' : data.available_tickets,
+                'nights_in_destination' : data.nights_in_destination,
             },
         },
         
