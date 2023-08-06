@@ -1,5 +1,6 @@
 import 'package:client/models/flight_state.dart';
 import 'package:client/providers.dart';
+import 'package:client/providers/flight_view_model.dart';
 import 'package:client/screens/flight_search_result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,6 +23,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final viewState = ref.watch(flightStateProvider);
+    final state = ref.read(flightStateProvider);
 
     return viewState.when(
         loading: () => _loading(),
@@ -39,13 +41,17 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Widget _error() {
-    return const Scaffold(
-      body: Center(
-          child: Scaffold(
-        body: Center(
+    return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text('Try again'),
+        onPressed: () {
+          ref.read(flightStateProvider.notifier).setToReady();
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: const Center(
           child: Text('There was an error'),
-        ),
-      )),
+      ),
     );
   }
 

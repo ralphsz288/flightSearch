@@ -23,11 +23,9 @@ def home(request):
 
 @require_http_methods(['GET'])
 def getFlights(request):
-    tomorrow = datetime.now() + timedelta(days=30)
-    six_month_from_today = datetime.now() + timedelta(days=60)
-    
     try:
-        
+        from_date = convert_string_to_datetime(request.GET.get('departure_date_from'))
+        to_date = convert_string_to_datetime(request.GET.get('return_date_to'))
         nights_from = request.GET.get('nights_in_destination_from')
         nights_from = int(float(nights_from))
         nights_to = request.GET.get('nights_in_destination_to')
@@ -37,13 +35,12 @@ def getFlights(request):
         data = flightSearch.check_flights(
         origin_city_code = request.GET.get('from').upper(),
         destination_city_code = request.GET.get('to').upper(),
-        from_time=tomorrow,
-        to_time=six_month_from_today,
+        from_time = from_date,
+        to_time = to_date,
         nights_in_destination_from = nights_from,
         nights_in_destination_to = nights_to,
         currency = request.GET.get('currency')
         )
-
 
         if data == 'KeyError':
             response = {
@@ -60,8 +57,6 @@ def getFlights(request):
             },
             return HttpResponse(json.dumps(response))
         
-        print(data.price)
-
         response = {
             'success' : True,
             'data' : {
@@ -82,6 +77,13 @@ def getFlights(request):
     except Exception as e: 
         print(traceback.format_exc())
         response = {'success' : False}
+        return HttpResponse(json.dumps(response))
     
     return HttpResponse(json.dumps(response))
+
+def convert_string_to_datetime(word:str):
+    word = word.split(' ')
+    word = word[0].split('-')
+    word = datetime(int(word[0]),int(word[1]),int(word[2]))
+    return word
 
