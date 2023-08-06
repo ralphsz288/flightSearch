@@ -1,5 +1,6 @@
 import 'package:client/models/flight_state.dart';
 import 'package:client/providers.dart';
+import 'package:client/screens/flight_search_result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,17 +15,19 @@ class _HomePageState extends ConsumerState<HomePage> {
   RangeValues _rangeValues = const RangeValues(1, 50);
   late String fromLocation;
   late String toLocation;
+  DateTime startTime = DateTime.now();
+  DateTime endTime = DateTime.now().add(const Duration(days: 10));
+  TextEditingController dateRangeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    FlightState state;
     final viewState = ref.watch(flightStateProvider);
 
     return viewState.when(
         loading: () => _loading(),
         ready: () => _body(),
         error: () => _error(),
-        completed: (FlightState state) => _completed(state));
+        completed: (FlightState state) => FlightSearchResultPage(state: state));
   }
 
   Widget _loading() {
@@ -43,203 +46,6 @@ class _HomePageState extends ConsumerState<HomePage> {
           child: Text('There was an error'),
         ),
       )),
-    );
-  }
-
-  Widget _completed(FlightState state) {
-    return WillPopScope(
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(200),
-          child: AppBar(
-            flexibleSpace: ClipRRect(
-              borderRadius:
-                  const BorderRadius.only(bottomRight: Radius.circular(50)),
-              child: Container(
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("images/airplanePicture.jpg"),
-                          fit: BoxFit.fill))),
-            ),
-            shape: const RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.only(bottomRight: Radius.circular(50))),
-            leading: IconButton(
-              onPressed: () {
-                ref.read(flightStateProvider.notifier).setToReady();
-                Navigator.of(context).pushNamed('/home');
-              },
-              icon: const Icon(Icons.arrow_back),
-            ),
-          ),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 15),
-                child: Text(
-                  'Best flight found',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
-                ),
-              ),
-              const Divider(color: Colors.blue,),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 25, 25, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Price: ${state.resp![0]['data']['price']}€',
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
-                child: Card(
-                  elevation: 2,
-                  shadowColor: Colors.red,
-                  color: Colors.white30,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            state.fromLocation.toUpperCase(),
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            state.resp![0]['data']['departure_city'],
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                          Text(
-                            state.resp![0]['data']['departure_date']
-                                .substring(0, 10),
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                          Text(
-                            state.resp![0]['data']['departure_date']
-                                .substring(11, 16),
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                        ],
-                      ),
-                      const Icon(
-                        Icons.flight_takeoff_rounded,
-                        size: 30,
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            state.toLocation.toUpperCase(),
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            state.resp![0]['data']['destination_city'],
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                          Text(
-                            state.resp![0]['data']['departure_arrival']
-                                .substring(0, 10),
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                          Text(
-                            state.resp![0]['data']['departure_arrival']
-                                .substring(11, 16),
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Text(
-                  'Nights in destination: ${state.resp![0]['data']['nights_in_destination']}',
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w500),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 35),
-                child: Card(
-                  elevation: 2,
-                  shadowColor: Colors.blue,
-                  color: Colors.white30,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            state.toLocation.toUpperCase(),
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            state.resp![0]['data']['destination_city'],
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                          Text(
-                            state.resp![0]['data']['return_date']
-                                .substring(0, 10),
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                          Text(
-                            state.resp![0]['data']['return_date']
-                                .substring(11, 16),
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                        ],
-                      ),
-                      const Icon(
-                        Icons.flight_takeoff_rounded,
-                        size: 30,
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            state.fromLocation.toUpperCase(),
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            state.resp![0]['data']['departure_city'],
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                          Text(
-                            state.resp![0]['data']['return_arrival']
-                                .substring(0, 10),
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                          Text(
-                            state.resp![0]['data']['return_arrival']
-                                .substring(11, 16),
-                            style: const TextStyle(fontSize: 10),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const Divider(color: Colors.blue,),
-            ],
-          ),
-        ),
-      ),
-      onWillPop: () async {
-        return false;
-      },
     );
   }
 
@@ -327,8 +133,28 @@ class _HomePageState extends ConsumerState<HomePage> {
                   },
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: TextFormField(
+                  readOnly: true,
+                  controller: dateRangeController,
+                  decoration: const InputDecoration(
+                      labelText: 'Date:',
+                      hintText: 'Choose date range',
+                      prefixIcon: Icon(Icons.date_range),
+                      border: OutlineInputBorder()),
+                  onTap: () async {
+                    DateTimeRange result = await _showDatePicker();
+                    setState(() {
+                      startTime = result.start;
+                      endTime = result.end;
+                      dateRangeController.text = "${(startTime.toString().substring(0,10))} - ${(endTime.toString().substring(0,10))}";
+                    });
+                  },
+                ),
+              ),
               const Padding(
-                padding: EdgeInsets.only(top: 30),
+                padding: EdgeInsets.only(top: 50),
                 child: Center(
                     child: Text(
                   'How many days would you like to spend in your destination?',
@@ -356,7 +182,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        label: const Text('search flights'),
+        label: const Text('Search'),
         onPressed: () async {
           await ref.read(flightStateProvider.notifier).init(
               fromLocation,
@@ -367,5 +193,19 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  Future<DateTimeRange> _showDatePicker() async {
+    DateTimeRange? date = await showDateRangePicker(
+        context: context,
+        currentDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2025));
+    if (date == null) {
+      return DateTimeRange(
+          start: DateTime.now(),
+          end: DateTime.now().add(const Duration(days: 10)));
+    }
+    return date;
   }
 }
