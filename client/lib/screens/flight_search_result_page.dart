@@ -3,10 +3,10 @@ import 'package:client/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FlightSearchResultPage extends ConsumerWidget{
+class FlightSearchResultPage extends ConsumerWidget {
   final FlightState state;
 
-  const FlightSearchResultPage({required this.state,super.key});
+  const FlightSearchResultPage({required this.state, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,7 +17,7 @@ class FlightSearchResultPage extends ConsumerWidget{
           child: AppBar(
             flexibleSpace: ClipRRect(
               borderRadius:
-              const BorderRadius.only(bottomRight: Radius.circular(50)),
+                  const BorderRadius.only(bottomRight: Radius.circular(50)),
               child: Container(
                   decoration: const BoxDecoration(
                       image: DecorationImage(
@@ -26,7 +26,7 @@ class FlightSearchResultPage extends ConsumerWidget{
             ),
             shape: const RoundedRectangleBorder(
                 borderRadius:
-                BorderRadius.only(bottomRight: Radius.circular(50))),
+                    BorderRadius.only(bottomRight: Radius.circular(50))),
             leading: IconButton(
               onPressed: () {
                 ref.read(flightStateProvider.notifier).setToReady();
@@ -208,5 +208,4 @@ class FlightSearchResultPage extends ConsumerWidget{
       },
     );
   }
-
 }

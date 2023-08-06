@@ -148,7 +148,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                     setState(() {
                       startTime = result.start;
                       endTime = result.end;
-                      dateRangeController.text = "${(startTime.toString().substring(0,10))} - ${(endTime.toString().substring(0,10))}";
+                      dateRangeController.text =
+                          "${(startTime.toString().substring(0, 10))} - ${(endTime.toString().substring(0, 10))}";
                     });
                   },
                 ),
@@ -188,7 +189,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               fromLocation,
               toLocation,
               _rangeValues.start.toString(),
-              _rangeValues.end.toString());
+              _rangeValues.end.toString(),
+              startTime,
+              endTime);
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

@@ -11,7 +11,7 @@ class FlightViewModel extends StateNotifier<ViewState<FlightState>> {
   FlightViewModel() : super(const ViewState<FlightState>.ready());
 
   Future<void> init(String fromLocation, String toLocation, String fromDays,
-      String toDays) async {
+      String toDays, DateTime fromDate, DateTime toDate) async {
     state = const ViewState<FlightState>.loading();
 
     final queryParameters = {
@@ -36,6 +36,8 @@ class FlightViewModel extends StateNotifier<ViewState<FlightState>> {
         toLocation: toLocation,
         fromDays: fromDays,
         toDays: toDays,
+        fromDate: fromDate,
+        toDate: toDate,
         resp: data,
       );
 

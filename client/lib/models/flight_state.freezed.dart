@@ -17,9 +17,17 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$FlightState {
   String get fromLocation => throw _privateConstructorUsedError;
+
   String get toLocation => throw _privateConstructorUsedError;
+
   String get fromDays => throw _privateConstructorUsedError;
+
   String get toDays => throw _privateConstructorUsedError;
+
+  DateTime get fromDate => throw _privateConstructorUsedError;
+
+  DateTime get toDate => throw _privateConstructorUsedError;
+
   List<dynamic>? get resp => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -32,12 +40,15 @@ abstract class $FlightStateCopyWith<$Res> {
   factory $FlightStateCopyWith(
           FlightState value, $Res Function(FlightState) then) =
       _$FlightStateCopyWithImpl<$Res, FlightState>;
+
   @useResult
   $Res call(
       {String fromLocation,
       String toLocation,
       String fromDays,
       String toDays,
+      DateTime fromDate,
+      DateTime toDate,
       List<dynamic>? resp});
 }
 
@@ -48,6 +59,7 @@ class _$FlightStateCopyWithImpl<$Res, $Val extends FlightState>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -58,6 +70,8 @@ class _$FlightStateCopyWithImpl<$Res, $Val extends FlightState>
     Object? toLocation = null,
     Object? fromDays = null,
     Object? toDays = null,
+    Object? fromDate = null,
+    Object? toDate = null,
     Object? resp = freezed,
   }) {
     return _then(_value.copyWith(
@@ -77,6 +91,14 @@ class _$FlightStateCopyWithImpl<$Res, $Val extends FlightState>
           ? _value.toDays
           : toDays // ignore: cast_nullable_to_non_nullable
               as String,
+      fromDate: null == fromDate
+          ? _value.fromDate
+          : fromDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      toDate: null == toDate
+          ? _value.toDate
+          : toDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       resp: freezed == resp
           ? _value.resp
           : resp // ignore: cast_nullable_to_non_nullable
@@ -91,6 +113,7 @@ abstract class _$$_FlightStateCopyWith<$Res>
   factory _$$_FlightStateCopyWith(
           _$_FlightState value, $Res Function(_$_FlightState) then) =
       __$$_FlightStateCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -98,6 +121,8 @@ abstract class _$$_FlightStateCopyWith<$Res>
       String toLocation,
       String fromDays,
       String toDays,
+      DateTime fromDate,
+      DateTime toDate,
       List<dynamic>? resp});
 }
 
@@ -116,6 +141,8 @@ class __$$_FlightStateCopyWithImpl<$Res>
     Object? toLocation = null,
     Object? fromDays = null,
     Object? toDays = null,
+    Object? fromDate = null,
+    Object? toDate = null,
     Object? resp = freezed,
   }) {
     return _then(_$_FlightState(
@@ -135,6 +162,14 @@ class __$$_FlightStateCopyWithImpl<$Res>
           ? _value.toDays
           : toDays // ignore: cast_nullable_to_non_nullable
               as String,
+      fromDate: null == fromDate
+          ? _value.fromDate
+          : fromDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      toDate: null == toDate
+          ? _value.toDate
+          : toDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       resp: freezed == resp
           ? _value._resp
           : resp // ignore: cast_nullable_to_non_nullable
@@ -151,6 +186,8 @@ class _$_FlightState implements _FlightState {
       required this.toLocation,
       required this.fromDays,
       required this.toDays,
+      required this.fromDate,
+      required this.toDate,
       final List<dynamic>? resp})
       : _resp = resp;
 
@@ -162,7 +199,12 @@ class _$_FlightState implements _FlightState {
   final String fromDays;
   @override
   final String toDays;
+  @override
+  final DateTime fromDate;
+  @override
+  final DateTime toDate;
   final List<dynamic>? _resp;
+
   @override
   List<dynamic>? get resp {
     final value = _resp;
@@ -174,7 +216,7 @@ class _$_FlightState implements _FlightState {
 
   @override
   String toString() {
-    return 'FlightState(fromLocation: $fromLocation, toLocation: $toLocation, fromDays: $fromDays, toDays: $toDays, resp: $resp)';
+    return 'FlightState(fromLocation: $fromLocation, toLocation: $toLocation, fromDays: $fromDays, toDays: $toDays, fromDate: $fromDate, toDate: $toDate, resp: $resp)';
   }
 
   @override
@@ -189,12 +231,22 @@ class _$_FlightState implements _FlightState {
             (identical(other.fromDays, fromDays) ||
                 other.fromDays == fromDays) &&
             (identical(other.toDays, toDays) || other.toDays == toDays) &&
+            (identical(other.fromDate, fromDate) ||
+                other.fromDate == fromDate) &&
+            (identical(other.toDate, toDate) || other.toDate == toDate) &&
             const DeepCollectionEquality().equals(other._resp, _resp));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, fromLocation, toLocation,
-      fromDays, toDays, const DeepCollectionEquality().hash(_resp));
+  int get hashCode => Object.hash(
+      runtimeType,
+      fromLocation,
+      toLocation,
+      fromDays,
+      toDays,
+      fromDate,
+      toDate,
+      const DeepCollectionEquality().hash(_resp));
 
   @JsonKey(ignore: true)
   @override
@@ -209,18 +261,31 @@ abstract class _FlightState implements FlightState {
       required final String toLocation,
       required final String fromDays,
       required final String toDays,
+      required final DateTime fromDate,
+      required final DateTime toDate,
       final List<dynamic>? resp}) = _$_FlightState;
 
   @override
   String get fromLocation;
+
   @override
   String get toLocation;
+
   @override
   String get fromDays;
+
   @override
   String get toDays;
+
+  @override
+  DateTime get fromDate;
+
+  @override
+  DateTime get toDate;
+
   @override
   List<dynamic>? get resp;
+
   @override
   @JsonKey(ignore: true)
   _$$_FlightStateCopyWith<_$_FlightState> get copyWith =>
