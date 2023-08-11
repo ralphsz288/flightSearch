@@ -20,8 +20,8 @@ class FlightViewModel extends StateNotifier<ViewState<FlightState>> {
       'nights_in_destination_from': fromDays,
       'nights_in_destination_to': toDays,
       'currency': 'EUR',
-      'departure_date_from' : fromDate,
-      'return_date_to' : toDate,
+      'departure_date_from': fromDate,
+      'return_date_to': toDate,
     };
     const baseUrl = 'http://192.168.1.206:8000/';
     const path = 'getFlights/';

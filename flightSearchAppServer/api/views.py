@@ -31,7 +31,6 @@ def getFlights(request):
         nights_to = request.GET.get('nights_in_destination_to')
         nights_to = int(float(nights_to))
 
-
         data = flightSearch.check_flights(
         origin_city_code = request.GET.get('from').upper(),
         destination_city_code = request.GET.get('to').upper(),
@@ -57,7 +56,8 @@ def getFlights(request):
             },
             return HttpResponse(json.dumps(response))
         
-        response = {
+        if data.bagData != None:
+            response = {
             'success' : True,
             'data' : {
                 'price' : data.price,
@@ -71,8 +71,44 @@ def getFlights(request):
                 'return_arrival' : data.return_date_arrival,
                 'available_tickets' : data.available_tickets,
                 'nights_in_destination' : data.nights_in_destination,
+                'bagData' : {
+                    'isNone' : False,
+                    'one_bag_price' : data.bagData.oneBagPrice,
+                    'two_bags_price' : data.bagData.twoBagsPrice,
+                    'personal_item_height' : data.bagData.personal_item_height,
+                    'personal_item_length' : data.bagData.personal_item_length,
+                    'personal_item_weight' : data.bagData.personal_item_weight,
+                    'personal_item_width' : data.bagData.personal_item_width,
+                    'hold_height' : data.bagData.hold_height,
+                    'hold_length' : data.bagData.hold_length,
+                    'hold_weight' : data.bagData.hold_weight,
+                    'hold_width' : data.bagData.hold_width,
+                },
             },
         },
+        else:
+            response = {
+            'success' : True,
+            'data' : {
+                'price' : data.price,
+                'departure_city' : data.origin_city,
+                'departure_airpot' : data.origin_airport,
+                'destination_city' : data.destination_city,
+                'destionation_airport' : data.destination_airport,
+                'departure_date' : data.out_date,
+                'departure_arrival' : data.out_date_arrival,
+                'return_date' : data.return_date,
+                'return_arrival' : data.return_date_arrival,
+                'available_tickets' : data.available_tickets,
+                'nights_in_destination' : data.nights_in_destination,
+                'bagData' : {
+                    'isNone' : True,
+                },
+            },
+        },
+            
+        
+        
         
     except Exception as e: 
         print(traceback.format_exc())

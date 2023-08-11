@@ -30,7 +30,6 @@ class FlightSearchResultPage extends ConsumerWidget {
             leading: IconButton(
               onPressed: () {
                 ref.read(flightStateProvider.notifier).setToReady();
-                Navigator.of(context).pushNamed('/home');
               },
               icon: const Icon(Icons.arrow_back),
             ),

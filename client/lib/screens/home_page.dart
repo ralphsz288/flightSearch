@@ -1,6 +1,5 @@
 import 'package:client/models/flight_state.dart';
 import 'package:client/providers.dart';
-import 'package:client/providers/flight_view_model.dart';
 import 'package:client/screens/flight_search_result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,7 +28,17 @@ class _HomePageState extends ConsumerState<HomePage> {
         loading: () => _loading(),
         ready: () => _body(),
         error: () => _error(),
-        completed: (FlightState state) => FlightSearchResultPage(state: state));
+        completed: (FlightState state) => MaterialApp(
+              home: WillPopScope(
+                child: FlightSearchResultPage(
+                  state: state,
+                ),
+                onWillPop: () async {
+                  ref.read(flightStateProvider.notifier).setToReady();
+                  return true;
+                },
+              ),
+            ));
   }
 
   Widget _loading() {
@@ -50,7 +59,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: const Center(
-          child: Text('There was an error'),
+        child: Text('There was an error'),
       ),
     );
   }
