@@ -1,5 +1,9 @@
 import requests
 import json
+import os
+from dotenv import load_dotenv, dotenv_values
+
+load_dotenv()
 
 class BagData:
     def __init__(self,oneBagPrice,twoBagsPrice,personal_item_height,personal_item_length,personal_item_weight,personal_item_width,hold_height,hold_length,hold_weight,hold_width,):
@@ -34,7 +38,7 @@ class FlightData:
 
 class FlightSearch:
     def __init__(self):
-        self.TEQUILA_API_KEY = 'n1FTfoML9-sNLW5nTTKRkox1k8teh7Fb'
+        self.TEQUILA_API_KEY = os.getenv("TEQUILA_API_KEY")
         self.TEQUILA_ENDPOINT = "https://api.tequila.kiwi.com"
     def check_flights(self, origin_city_code, destination_city_code, from_time, to_time,nights_in_destination_from,nights_in_destination_to,currency):
         headers = {"apikey": self.TEQUILA_API_KEY}

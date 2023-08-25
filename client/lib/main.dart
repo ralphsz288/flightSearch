@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: const HomePage(),
         routes: {
           '/home': (context) => const HomePage(),

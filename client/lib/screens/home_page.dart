@@ -29,6 +29,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         ready: () => _body(),
         error: () => _error(),
         completed: (FlightState state) => MaterialApp(
+          debugShowCheckedModeBanner: false,
               home: WillPopScope(
                 child: FlightSearchResultPage(
                   state: state,
@@ -71,6 +72,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         preferredSize: const Size.fromHeight(200),
         child: AppBar(
           centerTitle: true,
+          automaticallyImplyLeading: false,
           flexibleSpace: ClipRRect(
             borderRadius:
                 const BorderRadius.only(bottomRight: Radius.circular(50)),
@@ -83,13 +85,6 @@ class _HomePageState extends ConsumerState<HomePage> {
           shape: const RoundedRectangleBorder(
               borderRadius:
                   BorderRadius.only(bottomRight: Radius.circular(50))),
-          leading: IconButton(
-            onPressed: () {
-              ref.read(flightStateProvider.notifier).setToReady();
-              Navigator.of(context).pushNamed('/home');
-            },
-            icon: const Icon(Icons.arrow_back),
-          ),
         ),
       ),
       body: SingleChildScrollView(
