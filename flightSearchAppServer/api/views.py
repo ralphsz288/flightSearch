@@ -8,7 +8,7 @@ from django.http import HttpResponse
 import requests
 from rest_framework.decorators import api_view
 from django.views.decorators.http import require_http_methods
-
+from urllib.parse import quote
 from flight_data_holder.flight_search import FlightSearch
 
 
@@ -56,6 +56,7 @@ def getFlights(request):
             },
             return HttpResponse(json.dumps(response))
         
+        
         if data.bagData != None:
             response = {
             'success' : True,
@@ -71,6 +72,7 @@ def getFlights(request):
                 'return_arrival' : data.return_date_arrival,
                 'available_tickets' : data.available_tickets,
                 'nights_in_destination' : data.nights_in_destination,
+                'link' : data.link,
                 'bagData' : {
                     'isNone' : False,
                     'one_bag_price' : data.bagData.oneBagPrice,
@@ -101,21 +103,18 @@ def getFlights(request):
                 'return_arrival' : data.return_date_arrival,
                 'available_tickets' : data.available_tickets,
                 'nights_in_destination' : data.nights_in_destination,
+                'link' : data.link,
                 'bagData' : {
                     'isNone' : True,
                 },
             },
         },
-            
-        
-        
-        
     except Exception as e: 
         print(traceback.format_exc())
         response = {'success' : False}
         return HttpResponse(json.dumps(response))
-    
-    return HttpResponse(json.dumps(response))
+    print(data.link)
+    return HttpResponse(json.dumps(response), content_type='application/json')
 
 def convert_string_to_datetime(word:str):
     word = word.split(' ')

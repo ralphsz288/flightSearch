@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return ProviderScope(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData.light(),
         home: const HomePage(),
         routes: {
           '/home': (context) => const HomePage(),

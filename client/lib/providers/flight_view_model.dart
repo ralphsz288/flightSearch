@@ -32,6 +32,7 @@ class FlightViewModel extends StateNotifier<ViewState<FlightState>> {
     final resp = await http.get(url);
     List data = json.decode(resp.body);
 
+
     if (resp.statusCode == 200 && data[0]['success'] == true) {
       _flightState = FlightState(
         fromLocation: fromLocation,
@@ -42,11 +43,11 @@ class FlightViewModel extends StateNotifier<ViewState<FlightState>> {
         toDate: toDate,
         resp: data,
       );
-
+      print('rsppp');
+      print(_flightState.resp![0]['data']['link']);
       state = ViewState<FlightState>.completed(_flightState);
-      print(_flightState.resp);
+
     } else {
-      print('errorrrrr');
       state = const ViewState<FlightState>.error();
     }
   }

@@ -2,9 +2,21 @@ import 'package:client/models/flight_state.dart';
 import 'package:client/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FlightSearchResultPage extends ConsumerWidget {
   final FlightState state;
+
+  Future<void> launchUrl(url) async {
+    final Uri link = Uri.parse(url);
+    print(link);
+    try {
+      await launch(link.toString());
+    } on Exception catch (e) {
+      print(e);
+    }
+
+  }
 
   const FlightSearchResultPage({required this.state, super.key});
 
@@ -197,6 +209,14 @@ class FlightSearchResultPage extends ConsumerWidget {
               ),
               const Divider(
                 color: Colors.blue,
+              ),
+              ElevatedButton.icon(
+                  onPressed: () async {
+                    await launchUrl(state.resp![0]['data']['link']);
+                  },
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
+                  icon: Icon(Icons.attach_money),
+                  label: const Text ('Buy tickets'),
               ),
             ],
           ),

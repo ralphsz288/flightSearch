@@ -22,7 +22,7 @@ class FlightData:
 
     def __init__(self, price, origin_city, origin_airport, destination_city, destination_airport, out_date, 
                  return_date,available_tickets,out_date_arrival,return_date_arrival,nights_in_destination,
-                 bagData:BagData):
+                 link,bagData:BagData):
         self.price = price
         self.origin_city = origin_city
         self.origin_airport = origin_airport
@@ -34,6 +34,7 @@ class FlightData:
         self.out_date_arrival = out_date_arrival
         self.return_date_arrival = return_date_arrival
         self.nights_in_destination = nights_in_destination
+        self.link = link
         self.bagData = bagData
 
 class FlightSearch:
@@ -68,32 +69,29 @@ class FlightSearch:
                 bag_data = BagData(data['bags_price']['1'],data['bags_price']['2'],data['baglimit']['personal_item_height'],
                                    data['baglimit']['personal_item_length'],data['baglimit']['personal_item_weight'],data['baglimit']['personal_item_width'],
                                    data['baglimit']['hold_height'],data['baglimit']['hold_length'],data['baglimit']['hold_weight'],data['baglimit']['hold_width'])
-                print(bag_data)
             else:
                 bag_data = None
 
-            
         except KeyError:
             print(f"No flight data found in api response")
             return 'KeyError'
         except IndexError:
             print(f"No flights found for {destination_city_code}.")
             return 'IndexError'
-        
-        
-        
+
         flight_data = FlightData(
-            price=data["price"],
-            origin_city=data["route"][0]["cityFrom"],
-            origin_airport=data["route"][0]["flyFrom"],
-            destination_city=data["route"][0]["cityTo"],
-            destination_airport=data["route"][0]["flyTo"],
-            out_date=data["route"][0]["local_departure"],
-            out_date_arrival=data["route"][0]["local_arrival"],
-            return_date=data["route"][1]["local_departure"],
-            return_date_arrival=data["route"][1]["local_arrival"],
-            available_tickets=data['availability']['seats'],
-            nights_in_destination=data['nightsInDest'],
+            price = data["price"],
+            origin_city = data["route"][0]["cityFrom"],
+            origin_airport = data["route"][0]["flyFrom"],
+            destination_city = data["route"][0]["cityTo"],
+            destination_airport = data["route"][0]["flyTo"],
+            out_date = data["route"][0]["local_departure"],
+            out_date_arrival = data["route"][0]["local_arrival"],
+            return_date = data["route"][1]["local_departure"],
+            return_date_arrival = data["route"][1]["local_arrival"],
+            available_tickets = data['availability']['seats'],
+            nights_in_destination = data['nightsInDest'],
+            link = data['deep_link'],
             bagData = bag_data
         )
         return flight_data

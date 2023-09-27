@@ -29,7 +29,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         ready: () => _body(),
         error: () => _error(),
         completed: (FlightState state) => MaterialApp(
-          debugShowCheckedModeBanner: false,
+              debugShowCheckedModeBanner: false,
               home: WillPopScope(
                 child: FlightSearchResultPage(
                   state: state,
