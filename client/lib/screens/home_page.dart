@@ -80,117 +80,132 @@ class _HomePageState extends ConsumerState<HomePage> {
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage("images/airplanePicture.jpg"),
-                        fit: BoxFit.fill))),
+                        fit: BoxFit.cover))),
           ),
           shape: const RoundedRectangleBorder(
               borderRadius:
                   BorderRadius.only(bottomRight: Radius.circular(50))),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 20,
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage('https://wallpapers.com/images/featured/clouds-phone-hxlgadjgsrq7yrtk.jpg'),
+                  fit: BoxFit.cover,
+                ),
+            ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Center(
-                  child: Text(
-                'Search flight',
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
-              )),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: TextFormField(
-                  autofocus: false,
-                  keyboardType: TextInputType.name,
-                  decoration: const InputDecoration(
-                      labelText: 'From:',
-                      hintText: 'Enter iatacode',
-                      prefixIcon: Icon(Icons.flight_takeoff_outlined),
-                      border: OutlineInputBorder()),
-                  onChanged: (value) {
-                    setState(() {
-                      fromLocation = value;
-                    });
-                  },
-                  validator: (value) {
-                    return value!.isEmpty ? 'Please enter username' : null;
-                  },
-                ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: TextFormField(
-                  autofocus: false,
-                  keyboardType: TextInputType.name,
-                  decoration: const InputDecoration(
-                      labelText: 'To:',
-                      hintText: 'Enter iatacode',
-                      prefixIcon: Icon(Icons.flight_land_outlined),
-                      border: OutlineInputBorder()),
-                  onChanged: (value) {
-                    setState(() {
-                      toLocation = value;
-                    });
-                  },
-                  validator: (value) {
-                    return value!.isEmpty ? 'Please enter username' : null;
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: TextFormField(
-                  readOnly: true,
-                  controller: dateRangeController,
-                  decoration: const InputDecoration(
-                      labelText: 'Date:',
-                      hintText: 'Choose date range',
-                      prefixIcon: Icon(Icons.date_range),
-                      border: OutlineInputBorder()),
-                  onTap: () async {
-                    DateTimeRange result = await _showDatePicker();
-                    setState(() {
-                      startTime = result.start;
-                      endTime = result.end;
-                      dateRangeController.text =
-                          "${(startTime.toString().substring(0, 10))} - ${(endTime.toString().substring(0, 10))}";
-                    });
-                  },
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 50),
-                child: Center(
-                    child: Text(
-                  'How many days would you like to spend in your destination?',
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
-                )),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: RangeSlider(
-                    values: _rangeValues,
-                    max: 50,
-                    divisions: 50,
-                    labels: RangeLabels(
-                      _rangeValues.start.round().toString(),
-                      _rangeValues.end.round().toString(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Center(
+                      child: Text(
+                        'Search flight',
+                        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
+                      )),
+                  Container(
+                    color: Colors.white.withOpacity(0.2),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: TextFormField(
+                        autofocus: false,
+                        keyboardType: TextInputType.name,
+                        decoration: const InputDecoration(
+                            labelText: 'From:',
+                            hintText: 'Enter iatacode',
+                            prefixIcon: Icon(Icons.flight_takeoff_outlined),
+                            border: OutlineInputBorder()),
+                        onChanged: (value) {
+                          setState(() {
+                            fromLocation = value;
+                          });
+                        },
+                        validator: (value) {
+                          return value!.isEmpty ? 'Please enter username' : null;
+                        },
+                      ),
                     ),
-                    onChanged: (RangeValues values) {
-                      setState(() {
-                        _rangeValues = values;
-                      });
-                    }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: TextFormField(
+                      autofocus: false,
+                      keyboardType: TextInputType.name,
+                      decoration: const InputDecoration(
+                          labelText: 'To:',
+                          hintText: 'Enter iatacode',
+                          prefixIcon: Icon(Icons.flight_land_outlined),
+                          border: OutlineInputBorder()),
+                      onChanged: (value) {
+                        setState(() {
+                          toLocation = value;
+                        });
+                      },
+                      validator: (value) {
+                        return value!.isEmpty ? 'Please enter username' : null;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: TextFormField(
+                      readOnly: true,
+                      controller: dateRangeController,
+                      decoration: const InputDecoration(
+                          labelText: 'Date:',
+                          hintText: 'Choose date range',
+                          prefixIcon: Icon(Icons.date_range),
+                          border: OutlineInputBorder()),
+                      onTap: () async {
+                        DateTimeRange result = await _showDatePicker();
+                        setState(() {
+                          startTime = result.start;
+                          endTime = result.end;
+                          dateRangeController.text =
+                          "${(startTime.toString().substring(0, 10))} - ${(endTime.toString().substring(0, 10))}";
+                        });
+                      },
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 50),
+                    child: Center(
+                        child: Text(
+                          'How many days would you like to spend in your destination?',
+                          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: RangeSlider(
+                        values: _rangeValues,
+                        max: 50,
+                        divisions: 50,
+                        labels: RangeLabels(
+                          _rangeValues.start.round().toString(),
+                          _rangeValues.end.round().toString(),
+                        ),
+                        onChanged: (RangeValues values) {
+                          setState(() {
+                            _rangeValues = values;
+                          });
+                        }),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         label: const Text('Search'),
