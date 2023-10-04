@@ -15,7 +15,6 @@ class FlightSearchResultPage extends ConsumerWidget {
     } on Exception catch (e) {
       print(e);
     }
-
   }
 
   const FlightSearchResultPage({required this.state, super.key});
@@ -211,12 +210,13 @@ class FlightSearchResultPage extends ConsumerWidget {
                 color: Colors.blue,
               ),
               ElevatedButton.icon(
-                  onPressed: () async {
-                    await launchUrl(state.resp![0]['data']['link']);
-                  },
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
-                  icon: Icon(Icons.attach_money),
-                  label: const Text ('Buy tickets'),
+                onPressed: () async {
+                  await launchUrl(state.resp![0]['data']['link']);
+                },
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.lightBlue),
+                icon: Icon(Icons.attach_money),
+                label: const Text('Buy tickets'),
               ),
             ],
           ),
